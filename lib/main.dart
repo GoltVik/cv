@@ -6,6 +6,7 @@ import 'package:cv/widgets/language_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'models/experience_model.dart';
 import 'widgets/category_card.dart';
@@ -21,15 +22,17 @@ class CVApp extends StatelessWidget {
       title: 'CV Viktor Goltstein',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        iconTheme: IconThemeData(color: Colors.black54),
-        textTheme: TextTheme(
-          subtitle1: TextStyle(color: Colors.white),
-          caption: TextStyle(color: Colors.white54),
-          headline6: TextStyle(color: Colors.black54),
-        ),
-      ),
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          iconTheme: IconThemeData(color: Colors.black54),
+          textTheme: TextTheme(
+            subtitle1: TextStyle(color: Colors.white),
+            bodyText1: TextStyle(color: Colors.white),
+            caption: TextStyle(color: Colors.white54),
+            headline6: TextStyle(color: Colors.black54),
+          ),
+          canvasColor: Colors.blue,
+          dividerColor: Colors.white),
       home: CVPage(),
     );
   }
@@ -38,80 +41,24 @@ class CVApp extends StatelessWidget {
 class CVPage extends StatelessWidget {
   static const CATEGORIES_COUNT = 5;
   static const CROSS_AXIS_COUNT = 2;
-  static const CATEGORY_ICON_SIZE = 30.0;
+  static const MAX_PORTRAIT_WIDTH = 700;
 
   final DataLoader _loader = DataLoader();
-  final List<ListTile> drawerItems = [
-    ListTile(
-      leading: Icon(Icons.person),
-      title: Text(
-        'I am an enthusiastic, self-motivated, reliable, responsible and hard working person. I am a mature team worker and adaptable to '
-        'all challenging situations. I am able to work well both in a team environment as well as using own initiative.',
-        style: TextStyle(fontSize: 12),
-      ),
-    ),
-    ListTile(
-      leading: Icon(Icons.phone),
-      title: Text('(+48) 792 33 80 84'),
-      subtitle: Text('Mobile', style: TextStyle(fontSize: 10)),
-    ),
-    ListTile(
-      leading: Icon(Icons.mail),
-      title: Text('v.goltstein@gmail.com'),
-      subtitle: Text('Personal', style: TextStyle(fontSize: 10)),
-    ),
-    ListTile(
-      leading: Image.asset('assets/in.png', width: 25),
-      title: Text('www.linkedin.com/in/viktor- goltstein-421a46a4'),
-    ),
-    ListTile(
-      leading: Icon(Icons.pin_drop),
-      title: Text('Wrocław'),
-    ),
-  ];
+
+  bool inPortraitMode(context) =>
+      MediaQuery.of(context).size.width < MAX_PORTRAIT_WIDTH;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: inPortraitMode(context)
+          ? AppBar(title: Text('Viktor Goltstein'), centerTitle: true)
+          : null,
       backgroundColor: Theme.of(context).accentColor,
       body: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(
-            width: 300,
-            child: Column(
-              children: [
-                ClipRRect(
-                  borderRadius:
-                      BorderRadius.only(bottomRight: Radius.circular(36)),
-                  child: Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: [
-                      Image.asset('assets/photo.jpg', width: 300),
-                      ColoredBox(
-                        color: Colors.black.withOpacity(0.7),
-                        child: ListTile(
-                          title: Text('Viktor Goltstein',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1
-                                  .copyWith(fontSize: 24)),
-                          subtitle: Text('Flutter/Android Developer'),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: ListView.separated(
-                    itemBuilder: (_, index) => drawerItems[index],
-                    separatorBuilder: (_, __) => Divider(),
-                    itemCount: drawerItems.length,
-                  ),
-                )
-              ],
-            ),
-          ),
+          if (!inPortraitMode(context)) drawer,
           Expanded(
             child: StaggeredGridView(
               children: [
@@ -192,6 +139,65 @@ class CVPage extends StatelessWidget {
           ),
         ],
       ),
+      drawer: inPortraitMode(context) ? drawer : null,
     );
   }
+
+  Widget get drawer => Drawer(
+        child: Column(
+          children: [
+            Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                Image.asset('assets/photo.jpg'),
+                ColoredBox(
+                  color: Colors.black.withOpacity(0.7),
+                  child: ListTile(
+                    title: Text('Viktor Goltstein',
+                        style: TextStyle(fontSize: 24)),
+                    subtitle: Text('Flutter/Android Developer'),
+                  ),
+                )
+              ],
+            ),
+            Expanded(
+              child: ListView(
+                children: [
+                  ListTile(
+                    leading: Icon(Icons.person),
+                    title: Text(
+                      'I am an enthusiastic, self-motivated, reliable, responsible and hard working person. I am a mature team worker and adaptable to '
+                      'all challenging situations. I am able to work well both in a team environment as well as using own initiative.',
+                      style: TextStyle(fontSize: 12),
+                    ),
+                  ),
+                  ListTile(
+                    onTap: () => launch('tel:(+48) 792 33 80 84'),
+                    leading: Icon(Icons.phone),
+                    title: Text('(+48) 792 33 80 84'),
+                    subtitle: Text('Mobile', style: TextStyle(fontSize: 10)),
+                  ),
+                  ListTile(
+                    onTap: () => launch('mailto:v.goltstein@gmail.com'),
+                    leading: Icon(Icons.mail),
+                    title: Text('v.goltstein@gmail.com'),
+                    subtitle: Text('Personal', style: TextStyle(fontSize: 10)),
+                  ),
+                  ListTile(
+                    onTap: () => launch(
+                        'https://www.linkedin.com/in/viktor-goltstein-421a46a4'),
+                    leading: Image.asset('assets/in.png', width: 25),
+                    title:
+                        Text('www.linkedin.com/in/viktor-goltstein-421a46a4'),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.pin_drop),
+                    title: Text('Wrocław'),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      );
 }
