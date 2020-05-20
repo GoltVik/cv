@@ -23,6 +23,6 @@ class LanguageWidget extends StatelessWidget {
     );
   }
 
-  factory LanguageWidget.test(LanguageModel model) =>
+  factory LanguageWidget.fromModel(LanguageModel model) =>
       LanguageWidget(language: model.language, level: model.level);
 }

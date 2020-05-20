@@ -1,0 +1,26 @@
+[
+  {
+    "position": "Flutter/Android Developer",
+    "company": "HeroDOT",
+    "duration": "SIE 2019 - TERAZ",
+    "description": "Praca nad projektami Androidowymi i Flutterowymi. Tworzenie aplikacji Flutter od podstaw i wdrażanie nowych funkcji w aplikacjach na Androida poprzez dodanie modułów Flutter "
+  },
+  {
+    "position": "Android/iOS/Flutter Developer",
+    "company": "ArtaTech",
+    "duration": "LIP 2016 - LIP 2019",
+    "description": "Praca nad głównym produktem firmy - czytnikiem inkBOOK\nOpracowanie warstwy aplikacji niestandardowego systemu operacyjnego opartego na systemie Android\nTworzenie architektury aplikacji"
+  },
+  {
+    "position": "Android Developer",
+    "company": "SimpliGo",
+    "duration": "CZE 2015 - MAJ 2016",
+    "description": "Projektowanie i rozwijanie aplikacji do udostępniania samochodów, rowerów i rikszy\nProjektowanie i rozwój aplikacji serwisowej dla każdej usługi udostępniania"
+  },
+  {
+    "position": "Android Developer",
+    "company": "Posylki.pl",
+    "duration": "MAJ 2014 - MAJ 2015",
+    "description": "Projektowanie i rozwój aplikacji Posylki.pl do składania zamówień z Polski i wysyłania jej za granicę.\nAplikacja połączona z logiką biznesową po stronie serwera za pomocą interfejsu API REST.\nProjektuj i rozwijaj aplikacje IKTrans.pl do składania zamówień z IKEA."
+  }
+]

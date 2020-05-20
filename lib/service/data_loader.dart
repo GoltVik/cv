@@ -2,13 +2,19 @@ import 'dart:convert';
 
 import 'package:cv/models/certificate_model.dart';
 import 'package:cv/models/language_model.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'models/experience_model.dart';
+import 'package:easy_localization/easy_localization.dart';
+import '../models/experience_model.dart';
 
 class DataLoader {
+  final BuildContext context;
+
+  DataLoader(this.context);
+
   Future<String> _loadAsset(String fileName) async {
-    return await rootBundle.loadString('assets/$fileName.json');
+    return await rootBundle.loadString(
+        'assets/content/${context.locale.languageCode}/$fileName.json');
   }
 
   Future<List<ExperienceModel>> loadExperience() async {

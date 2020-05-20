@@ -47,7 +47,7 @@ class JobPosition extends StatelessWidget {
     );
   }
 
-  factory JobPosition.test(ExperienceModel position) => JobPosition(
+  factory JobPosition.fromModel(ExperienceModel position) => JobPosition(
         position: position.position,
         company: position.company,
         duration: position.duration,

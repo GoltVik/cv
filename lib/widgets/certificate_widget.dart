@@ -26,6 +26,6 @@ class CertificateWidget extends StatelessWidget {
     );
   }
 
-  factory CertificateWidget.test(CertificateModel model) =>
+  factory CertificateWidget.fromModel(CertificateModel model) =>
       CertificateWidget(title: model.title, school: model.school);
 }
